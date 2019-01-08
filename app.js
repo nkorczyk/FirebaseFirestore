@@ -31,6 +31,8 @@ function renderCafe(doc) {
 // Getting data
 // db.collection('cafes').where('city', '==', 'Skawa').get().then((snapshot) => {
 // db.collection('cafes').where('city', '>', 'n').get().then((snapshot) => {
+// db.collection('cafes').orderBy('city').get().then((snapshot) => {
+// db.collection('cafes').where('city', '==', 'Skawa').orderBy('name').get().then((snapshot) => {
 db.collection('cafes').get().then((snapshot) => {
     snapshot.docs.forEach(doc => {
         renderCafe(doc);
