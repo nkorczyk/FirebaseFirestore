@@ -33,10 +33,19 @@ function renderCafe(doc) {
 // db.collection('cafes').where('city', '>', 'n').get().then((snapshot) => {
 // db.collection('cafes').orderBy('city').get().then((snapshot) => {
 // db.collection('cafes').where('city', '==', 'Skawa').orderBy('name').get().then((snapshot) => {
-db.collection('cafes').get().then((snapshot) => {
-    snapshot.docs.forEach(doc => {
-        renderCafe(doc);
-    })
+// db.collection('cafes').get().then((snapshot) => {
+
+// Real-time listener
+db.collection('cafes').onSnapshot(snapshot => {
+    let changes = snapshot.docChanges();
+    changes.forEach(change => {
+        if (change.type === 'added') {
+            renderCafe(change.doc);
+        } else if (change.type === 'removed') {
+            let li = cafeList.querySelector('[data-id=' + change.doc.id + ']');
+            cafeList.removeChild(li);
+        }
+    });
 });
 
 // Saving data
